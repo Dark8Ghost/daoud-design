@@ -804,8 +804,39 @@ class PortfolioApp:
             self.tree.see(p_id)
 
     def on_build(self):
-        if build_website():
-            messagebox.showinfo("Success", "Website built successfully! All project cards, visual identity pages, and grids updated.")
+        import subprocess
+
+        # 1. Regenerate local HTML files
+        if not build_website():
+            return
+
+        # 2. Automatically sync changes to GitHub
+        try:
+            # Stage modified and newly created files
+            subprocess.run(["git", "add", "."], check=True, creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+            
+            # Commit changes (ignores error if nothing new was edited)
+            subprocess.run(["git", "commit", "-m", "Portfolio update via manager"], 
+                           capture_output=True, 
+                           creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+            
+            # Push updates to your GitHub repository
+            subprocess.run(["git", "push", "origin", "main"], check=True, creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+            
+            messagebox.showinfo(
+                "Success & Published! 🚀", 
+                "Website built and pushed to GitHub successfully!\n\nYour live site will reflect the changes in about 30–60 seconds."
+            )
+        except subprocess.CalledProcessError as err:
+            messagebox.showwarning(
+                "Local Build OK (Sync Failed)", 
+                f"HTML files updated locally, but Git push failed:\n{err}\n\nYou can still run 'git push' manually in the terminal."
+            )
+        except Exception as e:
+            messagebox.showinfo(
+                "Built Locally", 
+                f"Website built locally, but auto-publish encountered an issue:\n{e}"
+            )
 
     def delete_project(self):
         sel = self.tree.selection()
