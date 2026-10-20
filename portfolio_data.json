@@ -1,40 +1,5 @@
 [
   {
-    "id": "quranayman-identity",
-    "title": "تلاوات القارئ أيمن باناجه - هوية بصرية",
-    "subtitle": "",
-    "category": [
-      "identity"
-    ],
-    "type": "visual_identity",
-    "thumbnail": "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792425746/quranayman-cover.png",
-    "lightbox_media_type": "video",
-    "lightbox_media_url": "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792425746/quranayman-cover.png",
-    "pdf_url": "",
-    "client": "تلاوات القارئ أيمن باناجه",
-    "role": "Brand Identity & Art Direction",
-    "disciplines": "Visual Identity, Typography, Design",
-    "year": "2025",
-    "overview": "",
-    "deliverables": [
-      "Visual Identity",
-      "Logo Construction",
-      "Brand Guidelines"
-    ],
-    "gallery_images": [
-      "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792425746/quranayman-page-1.png",
-      "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792425746/quranayman-page-2.png",
-      "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792425746/quranayman-page-3.png",
-      "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792425746/quranayman-page-4.png",
-      "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792425746/quranayman-page-5.png",
-      "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792425746/quranayman-page-6.png",
-      "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792425746/quranayman-page-7.png",
-      "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792425746/quranayman-page-8.png",
-      "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792425746/quranayman-page-9.png"
-    ],
-    "video_embed_url": ""
-  },
-  {
     "id": "falfol-identity",
     "title": "فلفول الشام - هوية بصرية",
     "subtitle": "",
@@ -68,6 +33,41 @@
       "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792356073/falfol-page-9.png",
       "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792356073/falfol-page-10.png",
       "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792356073/falfol-page-11.png"
+    ],
+    "video_embed_url": ""
+  },
+  {
+    "id": "quranayman-identity",
+    "title": "تلاوات القارئ أيمن باناجه - هوية بصرية",
+    "subtitle": "",
+    "category": [
+      "identity"
+    ],
+    "type": "visual_identity",
+    "thumbnail": "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792425746/quranayman-cover.png",
+    "lightbox_media_type": "video",
+    "lightbox_media_url": "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792425746/quranayman-cover.png",
+    "pdf_url": "",
+    "client": "تلاوات القارئ أيمن باناجه",
+    "role": "Brand Identity & Art Direction",
+    "disciplines": "Visual Identity, Typography, Design",
+    "year": "2025",
+    "overview": "",
+    "deliverables": [
+      "Visual Identity",
+      "Logo Construction",
+      "Brand Guidelines"
+    ],
+    "gallery_images": [
+      "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792425746/quranayman-page-1.png",
+      "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792425746/quranayman-page-2.png",
+      "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792425746/quranayman-page-3.png",
+      "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792425746/quranayman-page-4.png",
+      "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792425746/quranayman-page-5.png",
+      "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792425746/quranayman-page-6.png",
+      "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792425746/quranayman-page-7.png",
+      "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792425746/quranayman-page-8.png",
+      "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792425746/quranayman-page-9.png"
     ],
     "video_embed_url": ""
   },
