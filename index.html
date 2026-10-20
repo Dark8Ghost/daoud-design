@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DAOUD DESIGN | داوود النابلسي - Creative Portfolio</title>
+  <meta name="description" content="Portfolio of Daoud Al-Nabulsi: Graphic Design, Motion Graphics, Photography, Prints, and Video Editing." />
+
+  <!-- Google Fonts: Cairo (Arabic) & Plus Jakarta Sans (English) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- GSAP Animation Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              yellow: '#F59E0B',
+              gold: '#E5A919',
+              dark: '#0B0B0E',
+              surface: '#141418',
+              card: '#1B1B22',
+              border: 'rgba(245, 158, 11, 0.15)',
+              accent: '#FBBF24'
+            }
+          },
+          fontFamily: {
+            sans: ['Cairo', 'Plus Jakarta Sans', 'sans-serif'],
+            en: ['Plus Jakarta Sans', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0B0B0E; }
+    ::-webkit-scrollbar-thumb { background: #262630; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #F59E0B; }
+
+    /* Custom Cursor */
+    .custom-cursor-dot, .custom-cursor-ring {
+      pointer-events: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      border-radius: 50%;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s ease;
+    }
+    .custom-cursor-dot { width: 8px; height: 8px; background: #F59E0B; }
+    .custom-cursor-ring {
+      width: 38px;
+      height: 38px;
+      border: 1.5px solid rgba(245, 158, 11, 0.6);
+      transition: width 0.2s cubic-bezier(0.16, 1, 0.3, 1), height 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+    }
+    .cursor-hover .custom-cursor-ring {
+      width: 58px;
+      height: 58px;
+      background: rgba(245, 158, 11, 0.1);
+      border-color: #F59E0B;
+    }
+
+    /* Card Glow Gradient */
+    .glow-hover {
+      position: relative;
+      overflow: hidden;
+    }
+    .glow-hover::after {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      background: radial-gradient(600px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(245, 158, 11, 0.25), transparent 40%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+      border-radius: inherit;
+    }
+    .glow-hover:hover::after {
+      opacity: 1;
+    }
+
+    /* Smooth Modal Transitions */
+    .modal-active {
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto !important;
+    }
+  </style>
+</head>
+
+<body class="bg-brand-dark text-gray-200 antialiased font-sans selection:bg-brand-yellow selection:text-black overflow-x-hidden">
+
+  <!-- Custom Cursor Elements (Desktop only) -->
+  <div class="custom-cursor-dot hidden md:block" id="cursor-dot"></div>
+  <div class="custom-cursor-ring hidden md:block" id="cursor-ring"></div>
+
+  <!-- Navigation -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-brand-dark/80 backdrop-blur-md border-b border-white/5 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <!-- Brand Logo -->
+      <a href="#hero" class="flex items-center gap-3 group" data-cursor="hover">
+        <div class="w-10 h-10 rounded-xl bg-brand-yellow flex items-center justify-center font-black text-black tracking-tighter shadow-[0_0_20px_rgba(245,158,11,0.4)] group-hover:scale-105 transition-transform">
+          D
+        </div>
+        <div class="flex flex-col">
+          <span class="font-extrabold tracking-wider text-white text-lg group-hover:text-brand-yellow transition-colors font-en uppercase">DAOUD DESIGN</span>
+          <span class="text-xs text-gray-400 -mt-1 font-light" data-i18n="nav_role">Visuals & Motion</span>
+        </div>
+      </a>
+
+      <!-- Desktop Links -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+        <a href="#about" class="text-gray-300 hover:text-brand-yellow transition-colors" data-i18n="nav_about" data-cursor="hover">من أنا</a>
+        <a href="#skills" class="text-gray-300 hover:text-brand-yellow transition-colors" data-i18n="nav_skills" data-cursor="hover">المهارات</a>
+        <a href="#clients" class="text-gray-300 hover:text-brand-yellow transition-colors" data-i18n="nav_clients" data-cursor="hover">العملاء</a>
+        <a href="#portfolio" class="text-gray-300 hover:text-brand-yellow transition-colors" data-i18n="nav_portfolio" data-cursor="hover">معرض الأعمال</a>
+        <a href="#contact" class="text-gray-300 hover:text-brand-yellow transition-colors" data-i18n="nav_contact" data-cursor="hover">تواصل معي</a>
+      </nav>
+
+      <!-- Language & CTA Actions -->
+      <div class="flex items-center gap-4">
+        <button id="langToggle" class="px-3 py-1.5 rounded-lg border border-white/10 bg-brand-surface hover:border-brand-yellow/40 text-xs font-semibold text-gray-300 hover:text-brand-yellow transition-all flex items-center gap-2" data-cursor="hover">
+          <i data-lucide="globe" class="w-3.5 h-3.5 text-brand-yellow"></i>
+          <span id="langLabel">English</span>
+        </button>
+
+        <a href="#contact" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-yellow text-black font-bold text-sm shadow-[0_0_25px_rgba(245,158,11,0.35)] hover:bg-yellow-400 hover:shadow-[0_0_35px_rgba(245,158,11,0.6)] hover:-translate-y-0.5 transition-all" data-cursor="hover">
+          <span data-i18n="nav_cta">ابدأ مشروعك</span>
+          <i data-lucide="arrow-left" id="ctaIcon" class="w-4 h-4"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section id="hero" class="relative min-h-screen pt-28 pb-16 flex items-center justify-center overflow-hidden">
+      <div class="absolute top-1/4 -right-24 w-96 h-96 bg-brand-yellow/10 rounded-full blur-[120px] pointer-events-none"></div>
+      <div class="absolute bottom-10 -left-24 w-96 h-96 bg-amber-600/10 rounded-full blur-[130px] pointer-events-none"></div>
+
+      <canvas id="heroCanvas" class="absolute inset-0 w-full h-full pointer-events-auto opacity-75"></canvas>
+
+      <div class="max-w-5xl mx-auto px-6 relative z-10 text-center flex flex-col items-center">
+        <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-brand-card/90 border border-brand-yellow/30 text-xs font-semibold text-brand-yellow shadow-inner mb-6 backdrop-blur-md">
+          <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+          <span data-i18n="hero_status">متاح للمشاريع الجديدة والتعاون الإبداعي</span>
+        </div>
+
+        <h1 class="text-4xl sm:text-6xl md:text-7xl font-black text-white leading-tight tracking-tight max-w-5xl">
+          <span data-i18n="hero_greeting">حياك الله، أنا</span>
+          <span class="bg-gradient-to-r from-brand-yellow via-yellow-200 to-amber-500 bg-clip-text text-transparent"> داوود النابلسي</span>
+        </h1>
+
+        <p class="mt-6 text-lg sm:text-xl text-gray-300 max-w-2xl leading-relaxed font-light" data-i18n="hero_description">
+          مصمم جرافيك، صانع موشن جرافيكس ومخرج محتوى مرئي. أحول الأفكار إلى تصاميم بصرية وهوّيات ذات طابع سينمائي واحترافي تعزز نمو علامتك التجارية.
+        </p>
+
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+          <a href="#portfolio" class="px-8 py-4 rounded-xl bg-brand-yellow text-black font-extrabold text-base shadow-[0_4px_25px_rgba(245,158,11,0.35)] hover:bg-yellow-400 hover:scale-105 active:scale-95 transition-all flex items-center gap-3" data-cursor="hover">
+            <span data-i18n="hero_view_work">استعرض الأعمال</span>
+            <i data-lucide="sparkles" class="w-5 h-5"></i>
+          </a>
+          <a href="#contact" class="px-8 py-4 rounded-xl bg-brand-card border border-white/10 hover:border-brand-yellow/50 text-white font-bold text-base hover:bg-white/5 active:scale-95 transition-all flex items-center gap-3" data-cursor="hover">
+            <span data-i18n="hero_contact_me">تواصل معي مباشرة</span>
+            <i data-lucide="mail" class="w-5 h-5 text-brand-yellow"></i>
+          </a>
+        </div>
+
+        <div class="mt-14 flex items-center gap-2 text-xs text-gray-500 font-mono tracking-widest uppercase">
+          <i data-lucide="mouse-pointer" class="w-3.5 h-3.5 text-brand-yellow animate-bounce"></i>
+          <span data-i18n="hero_canvas_hint">حرّك المؤشر للتحكم بمنحنيات القلم المتجهي (Vector Pen)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trusted Clients & Partners -->
+    <section id="clients" class="py-20 border-y border-white/5 bg-brand-surface/30 relative">
+      <div class="max-w-7xl mx-auto px-6 text-center">
+        <span class="text-xs font-bold tracking-widest uppercase text-brand-yellow/80" data-i18n="clients_subtitle">شركات وعلامات تجارية تشرفت بالعمل معها</span>
+
+        <div class="mt-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6 items-center">
+          <div class="group p-5 rounded-2xl bg-brand-card/60 border border-white/5 hover:border-brand-yellow/40 hover:bg-brand-card/90 transition-all duration-300 flex items-center justify-center h-24 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(245,158,11,0.12)] cursor-pointer" data-cursor="hover">
+            <img src="Companies Icons/HabraIcon.png" alt="Habra Restaurant" class="max-h-full max-w-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" loading="lazy" />
+          </div>
+          <div class="group p-5 rounded-2xl bg-brand-card/60 border border-white/5 hover:border-brand-yellow/40 hover:bg-brand-card/90 transition-all duration-300 flex items-center justify-center h-24 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(245,158,11,0.12)] cursor-pointer" data-cursor="hover">
+            <img src="Companies Icons/ChefHabraIcon.png" alt="Chef Habra" class="max-h-full max-w-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" loading="lazy" />
+          </div>
+          <div class="group p-5 rounded-2xl bg-brand-card/60 border border-white/5 hover:border-brand-yellow/40 hover:bg-brand-card/90 transition-all duration-300 flex items-center justify-center h-24 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(245,158,11,0.12)] cursor-pointer" data-cursor="hover">
+            <img src="Companies Icons/FalfolIcon.png" alt="Falafel Al-Sham" class="max-h-full max-w-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" loading="lazy" />
+          </div>
+          <div class="group p-5 rounded-2xl bg-brand-card/60 border border-white/5 hover:border-brand-yellow/40 hover:bg-brand-card/90 transition-all duration-300 flex items-center justify-center h-24 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(245,158,11,0.12)] cursor-pointer" data-cursor="hover">
+            <img src="Companies Icons/PalmierIcon.png" alt="Palmier Cafe" class="max-h-full max-w-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" loading="lazy" />
+          </div>
+          <div class="group p-5 rounded-2xl bg-brand-card/60 border border-white/5 hover:border-brand-yellow/40 hover:bg-brand-card/90 transition-all duration-300 flex items-center justify-center h-24 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(245,158,11,0.12)] cursor-pointer" data-cursor="hover">
+            <img src="Companies Icons/EyanaIcon.png" alt="Eyana Jewelry" class="max-h-full max-w-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" loading="lazy" />
+          </div>
+          <div class="group p-5 rounded-2xl bg-brand-card/60 border border-white/5 hover:border-brand-yellow/40 hover:bg-brand-card/90 transition-all duration-300 flex items-center justify-center h-24 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(245,158,11,0.12)] cursor-pointer" data-cursor="hover">
+            <img src="Companies Icons/TabahIcon.png" alt="Tabah Care" class="max-h-full max-w-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" loading="lazy" />
+          </div>
+          <div class="group p-5 rounded-2xl bg-brand-card/60 border border-white/5 hover:border-brand-yellow/40 hover:bg-brand-card/90 transition-all duration-300 flex items-center justify-center h-24 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(245,158,11,0.12)] cursor-pointer" data-cursor="hover">
+            <img src="Companies Icons/DamasIcon.png" alt="Damas" class="max-h-full max-w-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" loading="lazy" />
+          </div>
+          <div class="group p-5 rounded-2xl bg-brand-card/60 border border-white/5 hover:border-brand-yellow/40 hover:bg-brand-card/90 transition-all duration-300 flex items-center justify-center h-24 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(245,158,11,0.12)] cursor-pointer" data-cursor="hover">
+            <img src="Companies Icons/DrWafaaClinicIcon.png" alt="Dr. Wafaa Clinic" class="max-h-full max-w-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" loading="lazy" />
+          </div>
+          <div class="group p-5 rounded-2xl bg-brand-card/60 border border-white/5 hover:border-brand-yellow/40 hover:bg-brand-card/90 transition-all duration-300 flex items-center justify-center h-24 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(245,158,11,0.12)] cursor-pointer" data-cursor="hover">
+            <img src="Companies Icons/DrWafaaPharIcon.png" alt="Dr. Wafaa Pharmacy" class="max-h-full max-w-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" loading="lazy" />
+          </div>
+          <div class="group p-5 rounded-2xl bg-brand-card/60 border border-white/5 hover:border-brand-yellow/40 hover:bg-brand-card/90 transition-all duration-300 flex items-center justify-center h-24 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(245,158,11,0.12)] cursor-pointer" data-cursor="hover">
+            <img src="Companies Icons/EleinIcon.png" alt="Elein" class="max-h-full max-w-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" loading="lazy" />
+          </div>
+          <div class="group p-5 rounded-2xl bg-brand-card/60 border border-white/5 hover:border-brand-yellow/40 hover:bg-brand-card/90 transition-all duration-300 flex items-center justify-center h-24 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(245,158,11,0.12)] cursor-pointer" data-cursor="hover">
+            <img src="Companies Icons/CancheIcon.png" alt="Canche" class="max-h-full max-w-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" loading="lazy" />
+          </div>
+          <div class="group p-5 rounded-2xl bg-brand-card/60 border border-white/5 hover:border-brand-yellow/40 hover:bg-brand-card/90 transition-all duration-300 flex items-center justify-center h-24 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(245,158,11,0.12)] cursor-pointer" data-cursor="hover">
+            <img src="Companies Icons/ASIcon.png" alt="AS" class="max-h-full max-w-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" loading="lazy" />
+          </div>
+          <div class="group p-5 rounded-2xl bg-brand-card/60 border border-white/5 hover:border-brand-yellow/40 hover:bg-brand-card/90 transition-all duration-300 flex items-center justify-center h-24 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(245,158,11,0.12)] cursor-pointer" data-cursor="hover">
+            <img src="Companies Icons/BAIcon.png" alt="BA" class="max-h-full max-w-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" loading="lazy" />
+          </div>
+          <div class="group p-5 rounded-2xl bg-brand-card/60 border border-white/5 hover:border-brand-yellow/40 hover:bg-brand-card/90 transition-all duration-300 flex items-center justify-center h-24 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(245,158,11,0.12)] cursor-pointer" data-cursor="hover">
+            <img src="Companies Icons/FPIcon.png" alt="FP" class="max-h-full max-w-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" loading="lazy" />
+          </div>
+          <div class="group p-5 rounded-2xl bg-brand-card/60 border border-white/5 hover:border-brand-yellow/40 hover:bg-brand-card/90 transition-all duration-300 flex items-center justify-center h-24 hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(245,158,11,0.12)] cursor-pointer" data-cursor="hover">
+            <img src="Companies Icons/MESIcon.png" alt="MES" class="max-h-full max-w-full object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-28 relative">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-4">
+          <div>
+            <span class="text-brand-yellow text-sm font-extrabold tracking-widest uppercase" data-i18n="about_tag">نبذة عني وفلسفتي</span>
+            <h2 class="text-3xl sm:text-5xl font-black text-white mt-2" data-i18n="about_heading">تصميم يُبنى بالفكر، ويُقاس بالأثر</h2>
+          </div>
+          <p class="text-gray-400 max-w-md text-sm leading-relaxed" data-i18n="about_subtext">
+            أجمع بين التفكير الاستراتيجي والذائقة الإخراجية الحديثة؛ لأبتكر حلولاً بصرية تخدم أهداف أعمالك، من بناء الهوية المتكاملة وحتى الإنتاج المرئي والتصوير.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="glow-hover p-8 rounded-3xl bg-brand-surface border border-white/10 flex flex-col justify-between">
+            <div>
+              <div class="w-14 h-14 rounded-2xl bg-brand-yellow/10 border border-brand-yellow/30 flex items-center justify-center text-brand-yellow mb-6">
+                <i data-lucide="camera" class="w-7 h-7"></i>
+              </div>
+              <h3 class="text-xl font-bold text-white mb-2" data-i18n="bento_cs_title">صناعة وتوثيق المحتوى البصري</h3>
+              <p class="text-gray-400 text-sm leading-relaxed" data-i18n="bento_cs_desc">
+                تصوير ميداني وتوثيق لمنتجات وعلامات تجارية وصناع محتوى رقمي، اركّز على العين الإبداعية والتقاط اللحظات الحية التي تتفاعل مع الجمهور، من الأطعمة إلى الفعاليات.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-white/5 flex items-center gap-3 text-xs text-brand-yellow font-mono">
+              <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+              <span>Visual Content & Color Grading</span>
+            </div>
+          </div>
+
+          <div class="glow-hover p-8 rounded-3xl bg-brand-surface border border-white/10 flex flex-col justify-between md:scale-105 md:border-brand-yellow/40 md:shadow-[0_10px_40px_rgba(0,0,0,0.5)]">
+            <div>
+              <div class="w-14 h-14 rounded-2xl bg-brand-yellow text-black flex items-center justify-center mb-6">
+                <i data-lucide="clapperboard" class="w-7 h-7"></i>
+              </div>
+              <h3 class="text-xl font-bold text-white mb-2" data-i18n="bento_video_title">الموشن جرافيك والمونتاج</h3>
+              <p class="text-gray-400 text-sm leading-relaxed" data-i18n="bento_video_desc">
+                أقوم بتصميم وإنتاج فيديوهات موشن جرافيك ملفتة تساعد على إيصال الفكرة بسلاسة وقوة الى العميل وتختصر آلاف الكلمات.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-white/5 flex items-center gap-3 text-xs text-brand-yellow font-mono">
+              <i data-lucide="activity" class="w-4 h-4"></i>
+              <span>High Engagement Storytelling</span>
+            </div>
+          </div>
+
+          <div class="glow-hover p-8 rounded-3xl bg-brand-surface border border-white/10 flex flex-col justify-between">
+            <div>
+              <div class="w-14 h-14 rounded-2xl bg-brand-yellow/10 border border-brand-yellow/30 flex items-center justify-center text-brand-yellow mb-6">
+                <i data-lucide="palette" class="w-7 h-7"></i>
+              </div>
+              <h3 class="text-xl font-bold text-white mb-2" data-i18n="bento_identity_title">التصميم الجرافيكي والمطبوعات</h3>
+              <p class="text-gray-400 text-sm leading-relaxed" data-i18n="bento_identity_desc">
+                تصميم هويات بصرية متكاملة واعلانات تعبّر عن جوهر علامتك التجارية، مع تجهيز احترافي لكافة المطبوعات والتغليف وفق أعلى معايير الطباعة والإنتاج
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-white/5 flex items-center gap-3 text-xs text-brand-yellow font-mono">
+              <i data-lucide="printer" class="w-4 h-4"></i>
+              <span>Print-Ready CMYK Precision</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills & Tools -->
+    <section id="skills" class="py-20 bg-brand-surface/30 border-y border-white/5">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center max-w-2xl mx-auto mb-16">
+          <span class="text-brand-yellow text-sm font-extrabold tracking-widest uppercase" data-i18n="skills_tag">المهــــــارات الرقميــــــة</span>
+          <h2 class="text-3xl sm:text-4xl font-black text-white mt-2" data-i18n="skills_heading">أدوات صناعة الإبداع</h2>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="p-6 rounded-2xl bg-brand-card/80 border border-white/5 hover:border-brand-yellow/40 transition-all flex flex-col items-center text-center group" data-cursor="hover">
+            <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <i data-lucide="layers" class="w-6 h-6"></i>
+            </div>
+            <h4 class="font-bold text-white text-base">Photoshop & Illustrator</h4>
+            <span class="text-xs text-gray-400 mt-1" data-i18n="sk_graphic">تصميم إعلاني وهوية رقمية</span>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-brand-card/80 border border-white/5 hover:border-brand-yellow/40 transition-all flex flex-col items-center text-center group" data-cursor="hover">
+            <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <i data-lucide="play" class="w-6 h-6"></i>
+            </div>
+            <h4 class="font-bold text-white text-base">After Effects & Premiere</h4>
+            <span class="text-xs text-gray-400 mt-1" data-i18n="sk_motion">موشن جرافيك ومونتاج سينمائي</span>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-brand-card/80 border border-white/5 hover:border-brand-yellow/40 transition-all flex flex-col items-center text-center group" data-cursor="hover">
+            <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-brand-yellow flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <i data-lucide="camera" class="w-6 h-6"></i>
+            </div>
+            <h4 class="font-bold text-white text-base">Photography & Videography</h4>
+            <span class="text-xs text-gray-400 mt-1" data-i18n="sk_photo">تصوير المنتجات والفعاليات</span>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-brand-card/80 border border-white/5 hover:border-brand-yellow/40 transition-all flex flex-col items-center text-center group" data-cursor="hover">
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <i data-lucide="box" class="w-6 h-6"></i>
+            </div>
+            <h4 class="font-bold text-white text-base">Blender</h4>
+            <span class="text-xs text-gray-400 mt-1" data-i18n="sk_3d">تجسيم ثلاثي الأبعاد</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Portfolio Section with Interactive Filters -->
+    <section id="portfolio" class="py-28 relative">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+          <div>
+            <span class="text-brand-yellow text-sm font-extrabold tracking-widest uppercase" data-i18n="port_tag">نبذة عن الأعمال والمشاريع</span>
+            <h2 class="text-3xl sm:text-5xl font-black text-white mt-2" data-i18n="port_heading">معرض الأعمال</h2>
+          </div>
+
+          <!-- Category Filter Tabs: Replaced "مشاريع متكاملة" with "هويات بصرية" -->
+          <div class="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar border-b md:border-b-0 border-white/5">
+            <button class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-brand-yellow text-black transition-all shrink-0" data-filter="all" data-i18n="filter_all" data-cursor="hover">الكل</button>
+            <button class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-brand-card text-gray-400 hover:text-white hover:bg-brand-surface transition-all shrink-0" data-filter="identity" data-i18n="filter_identity" data-cursor="hover">هويات بصرية</button>
+            <button class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-brand-card text-gray-400 hover:text-white hover:bg-brand-surface transition-all shrink-0" data-filter="social" data-i18n="filter_social" data-cursor="hover">سوشيال ميديا</button>
+            <button class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-brand-card text-gray-400 hover:text-white hover:bg-brand-surface transition-all shrink-0" data-filter="motion" data-i18n="filter_motion" data-cursor="hover">موشن جرافيك</button>
+            <button class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-brand-card text-gray-400 hover:text-white hover:bg-brand-surface transition-all shrink-0" data-filter="photo" data-i18n="filter_photo" data-cursor="hover">تصوير منتجات</button>
+            <button class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-brand-card text-gray-400 hover:text-white hover:bg-brand-surface transition-all shrink-0" data-filter="prints" data-i18n="filter_prints" data-cursor="hover">مطبوعات وتغليف</button>
+            <button class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-brand-card text-gray-400 hover:text-white hover:bg-brand-surface transition-all shrink-0" data-filter="montage" data-i18n="filter_montage" data-cursor="hover">مونتاج وإعلانات</button>
+          </div>
+        </div>
+
+        <!-- Work Grid (Mix of images and videos) -->
+        <div id="portfolioGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- PROJECTS_START -->
+          <!-- Project Card: فلفول الشام - هوية بصرية -->
+          <a href="projects/falfol-identity.html" class="project-card glow-hover block rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="identity" data-project-type="visual_identity" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792356043/falfol-cover.png" alt="فلفول الشام - هوية بصرية" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute top-4 inset-x-4 flex items-center justify-between">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Visual Identity</span>
+                <div class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md text-white group-hover:bg-brand-yellow group-hover:text-black flex items-center justify-center transition-all duration-300">
+                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">فلفول الشام - هوية بصرية</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </a>
+          <!-- Project Card: تلاوات القارئ أيمن باناجه - هوية بصرية -->
+          <a href="projects/quranayman-identity.html" class="project-card glow-hover block rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="identity" data-project-type="visual_identity" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792425746/quranayman-cover.png" alt="تلاوات القارئ أيمن باناجه - هوية بصرية" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute top-4 inset-x-4 flex items-center justify-between">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Visual Identity</span>
+                <div class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md text-white group-hover:bg-brand-yellow group-hover:text-black flex items-center justify-center transition-all duration-300">
+                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">تلاوات القارئ أيمن باناجه - هوية بصرية</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </a>
+          <!-- Project Card: الياس اكلير - هوية بصرية -->
+          <a href="projects/alias-identity.html" class="project-card glow-hover block rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="identity" data-project-type="visual_identity" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792433996/aliaseclair-cover.png" alt="الياس اكلير - هوية بصرية" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute top-4 inset-x-4 flex items-center justify-between">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Visual Identity</span>
+                <div class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md text-white group-hover:bg-brand-yellow group-hover:text-black flex items-center justify-center transition-all duration-300">
+                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">الياس اكلير - هوية بصرية</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </a>
+          <!-- Project Card: هبرة للحوم الطازجة - حملة سوشيال ميديا رمضان -->
+          <a href="projects/habraramadan-socials.html" class="project-card glow-hover block rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="social" data-project-type="case_study" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791410677/habraramadan-cover.png" alt="هبرة للحوم الطازجة - حملة سوشيال ميديا رمضان" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute top-4 inset-x-4 flex items-center justify-between">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Case Study</span>
+                <div class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md text-white group-hover:bg-brand-yellow group-hover:text-black flex items-center justify-center transition-all duration-300">
+                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">هبرة للحوم الطازجة - حملة سوشيال ميديا رمضان</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1">هوية رقمية، تصاميم سوشيال ميديا</p>
+              </div>
+            </div>
+          </a>
+          <!-- Project Card: بالمير للعجوة - حملة سوشيال ميديا -->
+          <a href="projects/palmier-socials.html" class="project-card glow-hover block rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="social" data-project-type="case_study" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto,q_auto/palmier-cover" alt="بالمير للعجوة - حملة سوشيال ميديا" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute top-4 inset-x-4 flex items-center justify-between">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Case Study</span>
+                <div class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md text-white group-hover:bg-brand-yellow group-hover:text-black flex items-center justify-center transition-all duration-300">
+                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">بالمير للعجوة - حملة سوشيال ميديا</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1">هوية رقمية، تصاميم سوشيال ميديا، وفيديوهات موشن ومونتاج</p>
+              </div>
+            </div>
+          </a>
+          <!-- Project Card: يوم التأسيس السعودي - حملة سوشيال ميديا -->
+          <a href="projects/foundationday1-socials.html" class="project-card glow-hover block rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="social" data-project-type="case_study" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791404857/foundationday1-cover.png" alt="يوم التأسيس السعودي - حملة سوشيال ميديا" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute top-4 inset-x-4 flex items-center justify-between">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Case Study</span>
+                <div class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md text-white group-hover:bg-brand-yellow group-hover:text-black flex items-center justify-center transition-all duration-300">
+                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">يوم التأسيس السعودي - حملة سوشيال ميديا</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1">هوية رقمية، تصاميم سوشيال ميديا، موشن</p>
+              </div>
+            </div>
+          </a>
+          <!-- Project Card: نظري للنظارات والبصريات - حملة سوشيال ميديا -->
+          <a href="projects/mes-socials.html" class="project-card glow-hover block rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="social" data-project-type="case_study" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791406202/mes-cover.png" alt="نظري للنظارات والبصريات - حملة سوشيال ميديا" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute top-4 inset-x-4 flex items-center justify-between">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Case Study</span>
+                <div class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md text-white group-hover:bg-brand-yellow group-hover:text-black flex items-center justify-center transition-all duration-300">
+                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">نظري للنظارات والبصريات - حملة سوشيال ميديا</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1">هوية رقمية، تصاميم سوشيال ميديا، موشن</p>
+              </div>
+            </div>
+          </a>
+          <!-- Project Card: مطعم وكافية إيانا - حملة سوشيال ميديا -->
+          <a href="projects/eyana-socials.html" class="project-card glow-hover block rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="social" data-project-type="case_study" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791406750/eyana-cover.png" alt="مطعم وكافية إيانا - حملة سوشيال ميديا" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute top-4 inset-x-4 flex items-center justify-between">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Case Study</span>
+                <div class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md text-white group-hover:bg-brand-yellow group-hover:text-black flex items-center justify-center transition-all duration-300">
+                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">مطعم وكافية إيانا - حملة سوشيال ميديا</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1">هوية رقمية، تصاميم سوشيال ميديا، موشن</p>
+              </div>
+            </div>
+          </a>
+          <!-- Project Card: عيادات د. وفاء طلبه - حملة سوشيال ميديا -->
+          <a href="projects/wafaaclinic-socials.html" class="project-card glow-hover block rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="social" data-project-type="case_study" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791408448/wafaaclinic-cover.png" alt="عيادات د. وفاء طلبه - حملة سوشيال ميديا" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute top-4 inset-x-4 flex items-center justify-between">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Case Study</span>
+                <div class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md text-white group-hover:bg-brand-yellow group-hover:text-black flex items-center justify-center transition-all duration-300">
+                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">عيادات د. وفاء طلبه - حملة سوشيال ميديا</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1">هوية رقمية، تصاميم سوشيال ميديا، موشن</p>
+              </div>
+            </div>
+          </a>
+          <!-- Project Card: صيدلية د. وفاء طلبه - حملة سوشيال ميديا -->
+          <a href="projects/wafaaphar-socials.html" class="project-card glow-hover block rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="social" data-project-type="case_study" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791410288/wafaaphar-cover.png" alt="صيدلية د. وفاء طلبه - حملة سوشيال ميديا" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute top-4 inset-x-4 flex items-center justify-between">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Case Study</span>
+                <div class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md text-white group-hover:bg-brand-yellow group-hover:text-black flex items-center justify-center transition-all duration-300">
+                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">صيدلية د. وفاء طلبه - حملة سوشيال ميديا</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1">هوية رقمية، تصاميم سوشيال ميديا</p>
+              </div>
+            </div>
+          </a>
+          <!-- Project Card: كسوة الشتاء - موشن جرافيك -->
+          <div class="project-card glow-hover rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="motion" data-project-type="lightbox" data-media-type="video" data-orientation="landscape" data-media-url="https://res.cloudinary.com/di8ioqtv/video/upload/v1791476225/Kswah_Motion_-_Showcase.mp4" data-title="كسوة الشتاء - موشن جرافيك" data-desc="" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791468481/kswah-cover.png" alt="كسوة الشتاء - موشن جرافيك" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-14 h-14 rounded-full bg-brand-yellow/90 text-black flex items-center justify-center group-hover:scale-110 shadow-lg shadow-brand-yellow/30 transition-transform">
+                  <i data-lucide="play" class="w-6 h-6 fill-current"></i>
+                </div>
+              </div>
+              <div class="absolute top-4 left-4">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Motion Graphics</span>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">كسوة الشتاء - موشن جرافيك</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </div>
+          <!-- Project Card: بالمير للعجوة - موشن جرافيك -->
+          <div class="project-card glow-hover rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="motion" data-project-type="lightbox" data-media-type="video" data-orientation="landscape" data-media-url="https://res.cloudinary.com/di8ioqtv/video/upload/v1791475969/Palmier_-_Motion_-_No_Music.mp4" data-title="بالمير للعجوة - موشن جرافيك" data-desc="" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791472676/palmier1-cover.png" alt="بالمير للعجوة - موشن جرافيك" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-14 h-14 rounded-full bg-brand-yellow/90 text-black flex items-center justify-center group-hover:scale-110 shadow-lg shadow-brand-yellow/30 transition-transform">
+                  <i data-lucide="play" class="w-6 h-6 fill-current"></i>
+                </div>
+              </div>
+              <div class="absolute top-4 left-4">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Motion Graphics</span>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">بالمير للعجوة - موشن جرافيك</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </div>
+          <!-- Project Card: بالمير للعجوة - موشن جرافيك -->
+          <div class="project-card glow-hover rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="motion" data-project-type="lightbox" data-media-type="video" data-orientation="landscape" data-media-url="https://res.cloudinary.com/di8ioqtv/video/upload/v1791475970/Palmier_-_Motion_2_-_No_Music.mp4" data-title="بالمير للعجوة - موشن جرافيك" data-desc="" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791472676/palmier2-cover.png" alt="بالمير للعجوة - موشن جرافيك" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-14 h-14 rounded-full bg-brand-yellow/90 text-black flex items-center justify-center group-hover:scale-110 shadow-lg shadow-brand-yellow/30 transition-transform">
+                  <i data-lucide="play" class="w-6 h-6 fill-current"></i>
+                </div>
+              </div>
+              <div class="absolute top-4 left-4">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Motion Graphics</span>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">بالمير للعجوة - موشن جرافيك</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </div>
+          <!-- Project Card: بالمير للعجوة - موشن جرافيك -->
+          <div class="project-card glow-hover rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="motion" data-project-type="lightbox" data-media-type="video" data-orientation="landscape" data-media-url="https://res.cloudinary.com/di8ioqtv/video/upload/v1791475968/Palmier_-_Motion_3_-_No_Music.mp4" data-title="بالمير للعجوة - موشن جرافيك" data-desc="" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791473884/palmier3-cover.png" alt="بالمير للعجوة - موشن جرافيك" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-14 h-14 rounded-full bg-brand-yellow/90 text-black flex items-center justify-center group-hover:scale-110 shadow-lg shadow-brand-yellow/30 transition-transform">
+                  <i data-lucide="play" class="w-6 h-6 fill-current"></i>
+                </div>
+              </div>
+              <div class="absolute top-4 left-4">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Motion Graphics</span>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">بالمير للعجوة - موشن جرافيك</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </div>
+          <!-- Project Card: الين لتركيب وصيانة المصاعد - موشن جرافيك -->
+          <div class="project-card glow-hover rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="motion" data-project-type="lightbox" data-media-type="video" data-orientation="landscape" data-media-url="https://res.cloudinary.com/di8ioqtv/video/upload/v1791476351/EleinElevators_Motion_-_Showcase.mp4" data-title="الين لتركيب وصيانة المصاعد - موشن جرافيك" data-desc="" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791476206/elein-cover.png" alt="الين لتركيب وصيانة المصاعد - موشن جرافيك" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-14 h-14 rounded-full bg-brand-yellow/90 text-black flex items-center justify-center group-hover:scale-110 shadow-lg shadow-brand-yellow/30 transition-transform">
+                  <i data-lucide="play" class="w-6 h-6 fill-current"></i>
+                </div>
+              </div>
+              <div class="absolute top-4 left-4">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Motion Graphics</span>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">الين لتركيب وصيانة المصاعد - موشن جرافيك</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </div>
+          <!-- Project Card: نظري للنظارات والبصريات - موشن جرافيك -->
+          <div class="project-card glow-hover rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="motion" data-project-type="lightbox" data-media-type="video" data-orientation="landscape" data-media-url="https://res.cloudinary.com/di8ioqtv/video/upload/v1791476687/MyEyeSight_Motion_-_Showcase.mp4" data-title="نظري للنظارات والبصريات - موشن جرافيك" data-desc="" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791476673/mes1-cover.png" alt="نظري للنظارات والبصريات - موشن جرافيك" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-14 h-14 rounded-full bg-brand-yellow/90 text-black flex items-center justify-center group-hover:scale-110 shadow-lg shadow-brand-yellow/30 transition-transform">
+                  <i data-lucide="play" class="w-6 h-6 fill-current"></i>
+                </div>
+              </div>
+              <div class="absolute top-4 left-4">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Motion Graphics</span>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">نظري للنظارات والبصريات - موشن جرافيك</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </div>
+          <!-- Project Card: يوم التأسيس السعودي هبرة للحوم الطازجة - موشن جرافيك -->
+          <div class="project-card glow-hover rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="motion" data-project-type="lightbox" data-media-type="video" data-orientation="landscape" data-media-url="https://res.cloudinary.com/di8ioqtv/video/upload/v1791478690/Habra_Foundation_-_Motiongraphic_-_No_Music.mp4" data-title="يوم التأسيس السعودي هبرة للحوم الطازجة - موشن جرافيك" data-desc="" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791478816/foundationday1-cover1.png" alt="يوم التأسيس السعودي هبرة للحوم الطازجة - موشن جرافيك" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-14 h-14 rounded-full bg-brand-yellow/90 text-black flex items-center justify-center group-hover:scale-110 shadow-lg shadow-brand-yellow/30 transition-transform">
+                  <i data-lucide="play" class="w-6 h-6 fill-current"></i>
+                </div>
+              </div>
+              <div class="absolute top-4 left-4">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Motion Graphics</span>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">يوم التأسيس السعودي هبرة للحوم الطازجة - موشن جرافيك</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </div>
+          <!-- Project Card: يوم التأسيس السعودي شيف هبرة - موشن جرافيك -->
+          <div class="project-card glow-hover rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="motion" data-project-type="lightbox" data-media-type="video" data-orientation="landscape" data-media-url="https://res.cloudinary.com/di8ioqtv/video/upload/v1791479590/Habra_Foundation_-_MotionGraphic2_-_No_Music.mp4" data-title="يوم التأسيس السعودي شيف هبرة - موشن جرافيك" data-desc="" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791479480/foundationday1-cover2.png" alt="يوم التأسيس السعودي شيف هبرة - موشن جرافيك" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-14 h-14 rounded-full bg-brand-yellow/90 text-black flex items-center justify-center group-hover:scale-110 shadow-lg shadow-brand-yellow/30 transition-transform">
+                  <i data-lucide="play" class="w-6 h-6 fill-current"></i>
+                </div>
+              </div>
+              <div class="absolute top-4 left-4">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Motion Graphics</span>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">يوم التأسيس السعودي شيف هبرة - موشن جرافيك</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </div>
+          <!-- Project Card: الكنانة للاستشارات الهندسية - سوشيال ميديا -->
+          <div class="project-card glow-hover rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="social" data-project-type="lightbox" data-media-type="image" data-orientation="landscape" data-media-url="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791481688/kenan-post3.png" data-title="الكنانة للاستشارات الهندسية - سوشيال ميديا" data-desc="" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791481688/kenan-post3.png" alt="الكنانة للاستشارات الهندسية - سوشيال ميديا" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute top-4 left-4">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Social Media</span>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">الكنانة للاستشارات الهندسية - سوشيال ميديا</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </div>
+          <!-- Project Card: الكنانة للاستشارات الهندسية - سوشيال ميديا -->
+          <div class="project-card glow-hover rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="social" data-project-type="lightbox" data-media-type="image" data-orientation="landscape" data-media-url="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791481688/kenan-post2.png" data-title="الكنانة للاستشارات الهندسية - سوشيال ميديا" data-desc="" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791481688/kenan-post2.png" alt="الكنانة للاستشارات الهندسية - سوشيال ميديا" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute top-4 left-4">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Social Media</span>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">الكنانة للاستشارات الهندسية - سوشيال ميديا</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </div>
+          <!-- Project Card: الكنانة للاستشارات الهندسية - سوشيال ميديا -->
+          <div class="project-card glow-hover rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="social" data-project-type="lightbox" data-media-type="image" data-orientation="landscape" data-media-url="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791481690/kenan-post1.png" data-title="الكنانة للاستشارات الهندسية - سوشيال ميديا" data-desc="" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791481690/kenan-post1.png" alt="الكنانة للاستشارات الهندسية - سوشيال ميديا" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute top-4 left-4">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Social Media</span>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">الكنانة للاستشارات الهندسية - سوشيال ميديا</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </div>
+          <!-- Project Card: داتشيل - سوشيال ميديا -->
+          <div class="project-card glow-hover rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="social" data-project-type="lightbox" data-media-type="image" data-orientation="landscape" data-media-url="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791481689/dachel-post2.png" data-title="داتشيل - سوشيال ميديا" data-desc="" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791481689/dachel-post2.png" alt="داتشيل - سوشيال ميديا" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute top-4 left-4">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Social Media</span>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">داتشيل - سوشيال ميديا</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </div>
+          <!-- Project Card: داتشيل - سوشيال ميديا -->
+          <div class="project-card glow-hover rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="social" data-project-type="lightbox" data-media-type="image" data-orientation="landscape" data-media-url="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791481690/dachel-post1.png" data-title="داتشيل - سوشيال ميديا" data-desc="" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791481690/dachel-post1.png" alt="داتشيل - سوشيال ميديا" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute top-4 left-4">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Social Media</span>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">داتشيل - سوشيال ميديا</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </div>
+          <!-- Project Card: داتشيل - سوشيال ميديا -->
+          <div class="project-card glow-hover rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="social" data-project-type="lightbox" data-media-type="image" data-orientation="landscape" data-media-url="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791481689/dachel-post3.png" data-title="داتشيل - سوشيال ميديا" data-desc="" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791481689/dachel-post3.png" alt="داتشيل - سوشيال ميديا" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute top-4 left-4">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Social Media</span>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">داتشيل - سوشيال ميديا</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </div>
+          <!-- Project Card: كانش للحلويات الشرقية - سوشيال ميديا -->
+          <div class="project-card glow-hover rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="social" data-project-type="lightbox" data-media-type="image" data-orientation="landscape" data-media-url="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791481688/canche-post1.png" data-title="كانش للحلويات الشرقية - سوشيال ميديا" data-desc="" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791481688/canche-post1.png" alt="كانش للحلويات الشرقية - سوشيال ميديا" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute top-4 left-4">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Social Media</span>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">كانش للحلويات الشرقية - سوشيال ميديا</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </div>
+          <!-- Project Card: كانش للحلويات الشرقية - سوشيال ميديا -->
+          <div class="project-card glow-hover rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="social" data-project-type="lightbox" data-media-type="image" data-orientation="landscape" data-media-url="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791481689/canche-post2.png" data-title="كانش للحلويات الشرقية - سوشيال ميديا" data-desc="" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791481689/canche-post2.png" alt="كانش للحلويات الشرقية - سوشيال ميديا" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute top-4 left-4">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Social Media</span>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">كانش للحلويات الشرقية - سوشيال ميديا</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </div>
+          <!-- Project Card: كانش للحلويات الشرقية - سوشيال ميديا -->
+          <div class="project-card glow-hover rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="social" data-project-type="lightbox" data-media-type="image" data-orientation="landscape" data-media-url="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791481689/canche-post3.png" data-title="كانش للحلويات الشرقية - سوشيال ميديا" data-desc="" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791481689/canche-post3.png" alt="كانش للحلويات الشرقية - سوشيال ميديا" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute top-4 left-4">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Social Media</span>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">كانش للحلويات الشرقية - سوشيال ميديا</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </div>
+          <!-- Project Card: هبرة للحوم الطازجة - تصوير -->
+          <a href="projects/habra-photography.html" class="project-card glow-hover block rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="photo" data-project-type="case_study" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792246557/habra-photo-cover.png" alt="هبرة للحوم الطازجة - تصوير" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute top-4 inset-x-4 flex items-center justify-between">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Case Study</span>
+                <div class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md text-white group-hover:bg-brand-yellow group-hover:text-black flex items-center justify-center transition-all duration-300">
+                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">هبرة للحوم الطازجة - تصوير</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </a>
+          <!-- Project Card: شيف هبرة - تصوير -->
+          <a href="projects/chef-photography.html" class="project-card glow-hover block rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="photo" data-project-type="case_study" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792246600/chef-photo-cover.png" alt="شيف هبرة - تصوير" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute top-4 inset-x-4 flex items-center justify-between">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Case Study</span>
+                <div class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md text-white group-hover:bg-brand-yellow group-hover:text-black flex items-center justify-center transition-all duration-300">
+                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">شيف هبرة - تصوير</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </a>
+          <!-- Project Card: هبرة للحوم الطازجة - مطبوعات -->
+          <a href="projects/habra-prints.html" class="project-card glow-hover block rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="prints" data-project-type="case_study" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791934466/habra-print-cover.png" alt="هبرة للحوم الطازجة - مطبوعات" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute top-4 inset-x-4 flex items-center justify-between">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Case Study</span>
+                <div class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md text-white group-hover:bg-brand-yellow group-hover:text-black flex items-center justify-center transition-all duration-300">
+                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">هبرة للحوم الطازجة - مطبوعات</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </a>
+          <!-- Project Card: شيف هبرة - مطبوعات -->
+          <a href="projects/chef-prints.html" class="project-card glow-hover block rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="prints" data-project-type="case_study" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791989401/chef-print-cover.png" alt="شيف هبرة - مطبوعات" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute top-4 inset-x-4 flex items-center justify-between">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Case Study</span>
+                <div class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md text-white group-hover:bg-brand-yellow group-hover:text-black flex items-center justify-center transition-all duration-300">
+                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">شيف هبرة - مطبوعات</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </a>
+          <!-- Project Card: بشار عربي - مونتاج واعلانات -->
+          <a href="projects/bashar-montage.html" class="project-card glow-hover block rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="montage" data-project-type="case_study" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792186803/bashar-montage-cover.png" alt="بشار عربي - مونتاج واعلانات" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute top-4 inset-x-4 flex items-center justify-between">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Case Study</span>
+                <div class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md text-white group-hover:bg-brand-yellow group-hover:text-black flex items-center justify-center transition-all duration-300">
+                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">بشار عربي - مونتاج واعلانات</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </a>
+          <!-- Project Card: فيليكسار - مونتاج واعلانات -->
+          <a href="projects/felixar-montage.html" class="project-card glow-hover block rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="montage" data-project-type="case_study" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792186824/felixar-montage-cover.png" alt="فيليكسار - مونتاج واعلانات" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute top-4 inset-x-4 flex items-center justify-between">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Case Study</span>
+                <div class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md text-white group-hover:bg-brand-yellow group-hover:text-black flex items-center justify-center transition-all duration-300">
+                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">فيليكسار - مونتاج واعلانات</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </a>
+          <!-- Project Card: هبرة للحوم الطازجة - مونتاج وتصوير -->
+          <a href="projects/habra-montage.html" class="project-card glow-hover block rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="montage" data-project-type="case_study" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792252449/habra-montage-cover.png" alt="هبرة للحوم الطازجة - مونتاج وتصوير" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute top-4 inset-x-4 flex items-center justify-between">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Case Study</span>
+                <div class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md text-white group-hover:bg-brand-yellow group-hover:text-black flex items-center justify-center transition-all duration-300">
+                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">هبرة للحوم الطازجة - مونتاج وتصوير</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </a>
+          <!-- Project Card: شيف هبرة - مونتاج وتصوير -->
+          <a href="projects/chef-montage.html" class="project-card glow-hover block rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="montage" data-project-type="case_study" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792252449/chef-montage-cover.png" alt="شيف هبرة - مونتاج وتصوير" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute top-4 inset-x-4 flex items-center justify-between">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Case Study</span>
+                <div class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md text-white group-hover:bg-brand-yellow group-hover:text-black flex items-center justify-center transition-all duration-300">
+                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">شيف هبرة - مونتاج وتصوير</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </a>
+          <!-- Project Card: مشويات ومعجنات دمشق - مونتاج واعلانات -->
+          <a href="projects/damas-montage.html" class="project-card glow-hover block rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="montage" data-project-type="case_study" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792255417/damas-montage-cover.png" alt="مشويات ومعجنات دمشق - مونتاج واعلانات" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute top-4 inset-x-4 flex items-center justify-between">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Case Study</span>
+                <div class="w-8 h-8 rounded-full bg-black/60 backdrop-blur-md text-white group-hover:bg-brand-yellow group-hover:text-black flex items-center justify-center transition-all duration-300">
+                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                </div>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">مشويات ومعجنات دمشق - مونتاج واعلانات</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </a>
+          <!-- Project Card: أبواب وأكثر - مونتاج واعلانات -->
+          <div class="project-card glow-hover rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="montage" data-project-type="lightbox" data-media-type="video" data-orientation="vertical" data-media-url="https://www.youtube-nocookie.com/embed/DbLJYjXXCyA?autoplay=1&mute=1&rel=0" data-title="أبواب وأكثر - مونتاج واعلانات" data-desc="" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792256429/doors-montage-cover.png" alt="أبواب وأكثر - مونتاج واعلانات" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-14 h-14 rounded-full bg-brand-yellow/90 text-black flex items-center justify-center group-hover:scale-110 shadow-lg shadow-brand-yellow/30 transition-transform">
+                  <i data-lucide="play" class="w-6 h-6 fill-current"></i>
+                </div>
+              </div>
+              <div class="absolute top-4 left-4">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Montage & Reels</span>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">أبواب وأكثر - مونتاج واعلانات</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </div>
+          <!-- Project Card: افتتاح نادي الزمالك المدينة المنورة - مونتاج واعلانات -->
+          <div class="project-card glow-hover rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="montage" data-project-type="lightbox" data-media-type="video" data-orientation="landscape" data-media-url="https://www.youtube-nocookie.com/embed/ApQu0ltI63g?autoplay=1&mute=1&rel=0" data-title="افتتاح نادي الزمالك المدينة المنورة - مونتاج واعلانات" data-desc="" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792260214/video1-montage-cover.png" alt="افتتاح نادي الزمالك المدينة المنورة - مونتاج واعلانات" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-14 h-14 rounded-full bg-brand-yellow/90 text-black flex items-center justify-center group-hover:scale-110 shadow-lg shadow-brand-yellow/30 transition-transform">
+                  <i data-lucide="play" class="w-6 h-6 fill-current"></i>
+                </div>
+              </div>
+              <div class="absolute top-4 left-4">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Montage & Reels</span>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">افتتاح نادي الزمالك المدينة المنورة - مونتاج واعلانات</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </div>
+          <!-- Project Card: اليوم الوطني السعودي 96 الراشد مول - مونتاج واعلانات -->
+          <div class="project-card glow-hover rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="montage" data-project-type="lightbox" data-media-type="video" data-orientation="vertical" data-media-url="https://www.youtube-nocookie.com/embed/Fwo6MUSou6I?autoplay=1&mute=1&rel=0" data-title="اليوم الوطني السعودي 96 الراشد مول - مونتاج واعلانات" data-desc="" data-cursor="hover">
+            <div class="relative aspect-square overflow-hidden bg-zinc-900">
+              <img src="https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792260214/video2-montage-cover.png" alt="اليوم الوطني السعودي 96 الراشد مول - مونتاج واعلانات" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity"></div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-14 h-14 rounded-full bg-brand-yellow/90 text-black flex items-center justify-center group-hover:scale-110 shadow-lg shadow-brand-yellow/30 transition-transform">
+                  <i data-lucide="play" class="w-6 h-6 fill-current"></i>
+                </div>
+              </div>
+              <div class="absolute top-4 left-4">
+                <span class="px-3 py-1 rounded-lg bg-black/60 backdrop-blur-md text-[11px] font-bold text-brand-yellow uppercase tracking-wider">Montage & Reels</span>
+              </div>
+              <div class="absolute bottom-4 inset-x-4">
+                <h3 class="text-lg font-bold text-white group-hover:text-brand-yellow transition-colors">اليوم الوطني السعودي 96 الراشد مول - مونتاج واعلانات</h3>
+                <p class="text-xs text-gray-300 mt-1 line-clamp-1"></p>
+              </div>
+            </div>
+          </div>
+          <!-- PROJECTS_END -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Lightbox Modal (Adaptive 16:9 Cinema & 9:16 Shorts) -->
+    <div id="mediaModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/90 backdrop-blur-xl opacity-0 pointer-events-none transition-all duration-300">
+      <div id="modalBox" class="relative w-full max-w-4xl bg-brand-card rounded-3xl border border-white/10 overflow-hidden shadow-2xl flex flex-col max-h-[92vh] transition-all duration-300">
+        <button id="modalClose" class="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/70 hover:bg-brand-yellow text-white hover:text-black flex items-center justify-center transition-colors" data-cursor="hover">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+
+        <div id="modalMediaContent" class="w-full bg-black flex items-center justify-center aspect-video max-h-[65vh] overflow-hidden transition-all duration-300">
+        </div>
+
+        <div class="p-6 bg-brand-card border-t border-white/5">
+          <h3 id="modalTitle" class="text-xl font-black text-white">عنوان العمل</h3>
+          <p id="modalDesc" class="text-sm text-gray-400 mt-2 leading-relaxed">تفاصيل العمل والتنفيذ الفني.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-28 bg-brand-surface relative overflow-hidden">
+      <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+        <span class="text-brand-yellow text-sm font-extrabold tracking-widest uppercase" data-i18n="contact_tag">ابدأ رحلتك الإبداعية الآن</span>
+        <h2 class="text-3xl sm:text-5xl font-black text-white mt-3" data-i18n="contact_heading">جاهز لتحويل رؤيتك إلى واقع؟</h2>
+        <p class="mt-4 text-gray-300 max-w-xl mx-auto text-base" data-i18n="contact_subtext">
+          تواصل معي مباشرة لمناقشة مشروعك القادم.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-12">
+          <a href="https://wa.me/966531222851" target="_blank" rel="noopener noreferrer" class="p-5 rounded-2xl bg-brand-card border border-white/5 hover:border-emerald-500/50 hover:bg-emerald-500/10 transition-all flex flex-col items-center group" data-cursor="hover">
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+              <i data-lucide="message-circle" class="w-6 h-6"></i>
+            </div>
+            <span class="font-bold text-white text-sm">WhatsApp</span>
+            <span class="text-xs text-gray-400 mt-1" data-i18n="c_direct">محادثة مباشرة</span>
+          </a>
+
+          <a href="https://www.behance.net/1davido1" target="_blank" rel="noopener noreferrer" class="p-5 rounded-2xl bg-brand-card border border-white/5 hover:border-blue-500/50 hover:bg-blue-500/10 transition-all flex flex-col items-center group" data-cursor="hover">
+            <div class="w-12 h-12 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+              <i data-lucide="folder-git-2" class="w-6 h-6"></i>
+            </div>
+            <span class="font-bold text-white text-sm">Behance</span>
+            <span class="text-xs text-gray-400 mt-1" data-i18n="c_portfolio">معرض بيهانس</span>
+          </a>
+
+          <a href="https://www.instagram.com/1davido1/" target="_blank" rel="noopener noreferrer" class="p-5 rounded-2xl bg-brand-card border border-white/5 hover:border-pink-500/50 hover:bg-pink-500/10 transition-all flex flex-col items-center group" data-cursor="hover">
+            <div class="w-12 h-12 rounded-xl bg-pink-500/20 text-pink-400 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+              <i data-lucide="camera" class="w-6 h-6"></i>
+            </div>
+            <span class="font-bold text-white text-sm">Instagram</span>
+            <span class="text-xs text-gray-400 mt-1" data-i18n="c_social">اليوميات والأعمال</span>
+          </a>
+
+          <a href="mailto:duskiness96@gmail.com" class="p-5 rounded-2xl bg-brand-card border border-white/5 hover:border-brand-yellow/50 hover:bg-brand-yellow/10 transition-all flex flex-col items-center group" data-cursor="hover">
+            <div class="w-12 h-12 rounded-xl bg-brand-yellow/20 text-brand-yellow flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+              <i data-lucide="mail" class="w-6 h-6"></i>
+            </div>
+            <span class="font-bold text-white text-sm">Email</span>
+            <span class="text-xs text-gray-400 mt-1" data-i18n="c_email">البريد الالكتروني</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="py-8 border-t border-white/5 bg-brand-dark text-xs text-gray-500">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-brand-yellow"></span>
+        <span class="font-semibold text-gray-400">DAOUD DESIGN &copy; 2026.</span>
+        <span data-i18n="footer_rights">جميع الحقوق محفوظة.</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="#hero" class="hover:text-brand-yellow transition-colors" data-i18n="footer_top">العودة للأعلى ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    /* 1. Custom Mouse Follower */
+    const dot = document.getElementById('cursor-dot');
+    const ring = document.getElementById('cursor-ring');
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let ringX = mouseX;
+    let ringY = mouseY;
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if (dot) {
+        dot.style.left = `${mouseX}px`;
+        dot.style.top = `${mouseY}px`;
+      }
+    });
+
+    function renderCursor() {
+      ringX += (mouseX - ringX) * 0.15;
+      ringY += (mouseY - ringY) * 0.15;
+      if (ring) {
+        ring.style.left = `${ringX}px`;
+        ring.style.top = `${ringY}px`;
+      }
+      requestAnimationFrame(renderCursor);
+    }
+    renderCursor();
+
+    document.querySelectorAll('[data-cursor="hover"]').forEach((el) => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
+
+    document.querySelectorAll('.glow-hover').forEach((card) => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+        card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+      });
+    });
+
+    /* 2. Hero Pen-Tool Canvas */
+    const canvas = document.getElementById('heroCanvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let targetPoint = { x: 0, y: 0 };
+    let currentPoint = { x: 0, y: 0 };
+
+    function resizeCanvas() {
+      width = canvas.width = canvas.offsetWidth;
+      height = canvas.height = canvas.offsetHeight;
+      targetPoint = { x: width * 0.5, y: height * 0.5 };
+      currentPoint = { ...targetPoint };
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    window.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      if (e.clientY >= rect.top && e.clientY <= rect.bottom) {
+        targetPoint.x = e.clientX - rect.left;
+        targetPoint.y = e.clientY - rect.top;
+      }
+    });
+
+    function drawBezier() {
+      currentPoint.x += (targetPoint.x - currentPoint.x) * 0.06;
+      currentPoint.y += (targetPoint.y - currentPoint.y) * 0.06;
+
+      ctx.clearRect(0, 0, width, height);
+
+      const p0 = { x: width * 0.15, y: height * 0.65 };
+      const p3 = { x: width * 0.85, y: height * 0.65 };
+      const p1 = { x: width * 0.35, y: currentPoint.y };
+      const p2 = { x: width * 0.65, y: height * 1.3 - currentPoint.y };
+
+      ctx.strokeStyle = 'rgba(245, 158, 11, 0.18)';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([4, 4]);
+
+      ctx.beginPath();
+      ctx.moveTo(p0.x, p0.y);
+      ctx.lineTo(p1.x, p1.y);
+      ctx.moveTo(p3.x, p3.y);
+      ctx.lineTo(p2.x, p2.y);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      ctx.strokeStyle = '#F59E0B';
+      ctx.lineWidth = 3.5;
+      ctx.beginPath();
+      ctx.moveTo(p0.x, p0.y);
+      ctx.bezierCurveTo(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
+      ctx.stroke();
+
+      [p0, p1, p2, p3].forEach((pt, idx) => {
+        ctx.fillStyle = idx === 0 || idx === 3 ? '#E5A919' : '#FFFFFF';
+        ctx.strokeStyle = '#0B0B0E';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        if (idx === 0 || idx === 3) {
+          ctx.rect(pt.x - 6, pt.y - 6, 12, 12);
+        } else {
+          ctx.arc(pt.x, pt.y, 5, 0, Math.PI * 2);
+        }
+        ctx.fill();
+        ctx.stroke();
+      });
+
+      requestAnimationFrame(drawBezier);
+    }
+    drawBezier();
+
+    /* 3. Category Filter Logic */
+    const filterBtns = document.querySelectorAll('.filter-btn');
+
+    filterBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach((b) => {
+          b.classList.remove('bg-brand-yellow', 'text-black');
+          b.classList.add('bg-brand-card', 'text-gray-400', 'hover:text-white', 'hover:bg-brand-surface');
+        });
+
+        btn.classList.remove('bg-brand-card', 'text-gray-400', 'hover:text-white', 'hover:bg-brand-surface');
+        btn.classList.add('bg-brand-yellow', 'text-black');
+
+        const filter = btn.dataset.filter;
+        const currentCards = document.querySelectorAll('.project-card');
+
+        currentCards.forEach((card) => {
+          const cardCategories = (card.dataset.category || '').split(' ');
+          let isMatch = (filter === 'all') || cardCategories.includes(filter);
+
+          if (isMatch) {
+            gsap.to(card, {
+              scale: 1,
+              opacity: 1,
+              duration: 0.35,
+              display: 'block',
+              ease: 'power2.out'
+            });
+          } else {
+            gsap.to(card, {
+              scale: 0.85,
+              opacity: 0,
+              duration: 0.25,
+              display: 'none',
+              ease: 'power2.in'
+            });
+          }
+        });
+      });
+    });
+
+    /* 4. Adaptive Lightbox Modal */
+    const modal = document.getElementById('mediaModal');
+    const modalBox = document.getElementById('modalBox');
+    const modalMediaContent = document.getElementById('modalMediaContent');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalClose = document.getElementById('modalClose');
+
+    const gridContainer = document.getElementById('portfolioGrid');
+    gridContainer.addEventListener('click', (e) => {
+      const card = e.target.closest('.project-card');
+      if (!card) return;
+
+      if (card.tagName.toLowerCase() === 'a' || card.getAttribute('href')) {
+        return;
+      }
+
+      const type = card.dataset.mediaType || 'image';
+      let url = card.dataset.mediaUrl || '';
+      const title = card.dataset.title || '';
+      const desc = card.dataset.desc || '';
+      const isVertical = card.dataset.orientation === 'vertical' || 
+                         url.includes('/shorts/') || 
+                         url.includes('vertical');
+
+      modalTitle.textContent = title;
+      modalDesc.textContent = desc;
+
+      if (type === 'video') {
+        if (isVertical) {
+          modalBox.className = 'relative w-full max-w-sm sm:max-w-md bg-brand-card rounded-3xl border border-white/10 overflow-hidden shadow-2xl flex flex-col max-h-[92vh] transition-all duration-300';
+          modalMediaContent.className = 'w-full bg-black flex items-center justify-center aspect-[9/16] max-h-[72vh] overflow-hidden';
+        } else {
+          modalBox.className = 'relative w-full max-w-4xl bg-brand-card rounded-3xl border border-white/10 overflow-hidden shadow-2xl flex flex-col max-h-[92vh] transition-all duration-300';
+          modalMediaContent.className = 'w-full bg-black flex items-center justify-center aspect-video max-h-[65vh] overflow-hidden';
+        }
+
+        const isEmbed = url.includes('youtube') || url.includes('youtu.be') || url.includes('vimeo');
+
+        if (isEmbed) {
+          let embedSrc = url;
+
+          if (url.includes('youtube') || url.includes('youtu.be')) {
+            let videoId = '';
+            if (url.includes('/shorts/')) {
+              videoId = url.split('/shorts/')[1].split('?')[0].split('&')[0];
+            } else if (url.includes('/embed/')) {
+              videoId = url.split('/embed/')[1].split('?')[0].split('&')[0];
+            } else if (url.includes('v=')) {
+              videoId = url.split('v=')[1].split('&')[0];
+            } else if (url.includes('youtu.be/')) {
+              videoId = url.split('youtu.be/')[1].split('?')[0].split('&')[0];
+            }
+            embedSrc = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&mute=1&rel=0`;
+          } else if (url.includes('vimeo.com/') && !url.includes('player.vimeo.com')) {
+            const parts = url.replace('https://vimeo.com/', '').replace('http://vimeo.com/', '').split('?')[0].split('/');
+            const vId = parts[0];
+            const hash = parts[1] ? `?h=${parts[1]}&` : '?';
+            embedSrc = `https://player.vimeo.com/video/${vId}${hash}autoplay=1`;
+          }
+
+          modalMediaContent.innerHTML = `
+            <iframe src="${embedSrc}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="w-full h-full"></iframe>
+          `;
+        } else {
+          modalMediaContent.innerHTML = `
+            <video src="${url}" controls autoplay playsinline class="w-full h-full object-contain"></video>
+          `;
+        }
+      } else {
+        modalBox.className = 'relative w-full max-w-4xl bg-brand-card rounded-3xl border border-white/10 overflow-hidden shadow-2xl flex flex-col max-h-[92vh]';
+        modalMediaContent.className = 'w-full bg-black flex items-center justify-center max-h-[75vh] overflow-hidden';
+        modalMediaContent.innerHTML = `
+          <img src="${url}" alt="${title}" class="max-w-full max-h-[75vh] object-contain" />
+        `;
+      }
+
+      modal.classList.add('modal-active');
+    });
+
+    function closeModal() {
+      modal.classList.remove('modal-active');
+      modalMediaContent.innerHTML = '';
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    /* 5. Bilingual Engine */
+    const translations = {
+      ar: {
+        nav_role: 'فنون بصرية وموشن',
+        nav_about: 'من أنا',
+        nav_skills: 'المهارات',
+        nav_clients: 'العملاء',
+        nav_portfolio: 'معرض الأعمال',
+        nav_contact: 'تواصل معي',
+        nav_cta: 'ابدأ مشروعك',
+        hero_status: 'متاح للمشاريع الجديدة والتعاون الإبداعي',
+        hero_greeting: 'حياك الله، أنا',
+        hero_description: 'مصمم جرافيك، صانع موشن جرافيكس ومخرج محتوى مرئي. أحول الأفكار إلى تصاميم بصرية وهوّيات ذات طابع سينمائي واحترافي تعزز نمو علامتك التجارية.',
+        hero_view_work: 'استعرض الأعمال',
+        hero_contact_me: 'تواصل معي مباشرة',
+        hero_canvas_hint: 'حرّك المؤشر للتحكم بمنحنيات القلم المتجهي (Vector Pen)',
+        clients_subtitle: 'شركات وعلامات تجارية تشرفت بالعمل معها',
+        about_tag: 'نبذة عني وفلسفتي',
+        about_heading: 'تصميم يُبنى بالفكر، ويُقاس بالأثر',
+        about_subtext: 'أجمع بين التفكير الاستراتيجي والذائقة الإخراجية الحديثة؛ لأبتكر حلولاً بصرية تخدم أهداف أعمالك، من بناء الهوية المتكاملة وحتى الإنتاج المرئي والتصوير.',
+        bento_cs_title: 'صناعة وتوثيق المحتوى البصري',
+        bento_cs_desc: 'تصوير ميداني وتوثيق لمنتجات وعلامات تجارية وصناع محتوى رقمي، اركّز على العين الإبداعية والتقاط اللحظات الحية التي تتفاعل مع الجمهور، من الأطعمة إلى الفعاليات.',
+        bento_video_title: 'الموشن جرافيك والمونتاج',
+        bento_video_desc: 'أقوم بتصميم وإنتاج فيديوهات موشن جرافيك ملفتة تساعد على إيصال الفكرة بسلاسة وقوة الى العميل وتختصر آلاف الكلمات.',
+        bento_identity_title: 'التصميم الجرافيكي والمطبوعات',
+        bento_identity_desc: 'تصميم هويات بصرية متكاملة واعلانات تعبّر عن جوهر علامتك التجارية، مع تجهيز احترافي لكافة المطبوعات والتغليف وفق أعلى معايير الطباعة والإنتاج',
+        skills_tag: 'المهــــــارات الرقميــــــة',
+        skills_heading: 'أدوات صناعة الإبداع',
+        sk_graphic: 'تصميم إعلاني وهوية رقمية',
+        sk_motion: 'موشن جرافيك ومونتاج سينمائي',
+        sk_photo: 'تصوير المنتجات والفعاليات',
+        sk_3d: 'تجسيم ثلاثي الأبعاد',
+        port_tag: 'نبذة عن الأعمال والمشاريع',
+        port_heading: 'معرض الأعمال',
+        filter_all: 'الكل',
+        filter_identity: 'هويات بصرية',
+        filter_social: 'سوشيال ميديا',
+        filter_motion: 'موشن جرافيك',
+        filter_photo: 'تصوير منتجات',
+        filter_prints: 'مطبوعات وتغليف',
+        filter_montage: 'مونتاج وإعلانات',
+        contact_tag: 'ابدأ رحلتك الإبداعية الآن',
+        contact_heading: 'جاهز لتحويل رؤيتك إلى واقع رقمي مبهر؟',
+        contact_subtext: 'تواصل معي مباشرة لمناقشة مشروعك القادم، سواء كان تصميماً لهوية كاملة، فيديو موشن جرافيك، أو جلسة تصوير وإنتاج.',
+        c_direct: 'محادثة مباشرة',
+        c_portfolio: 'معرض بيهانس',
+        c_social: 'اليوميات والأعمال',
+        c_email: 'مراسلة بريدية',
+        footer_rights: 'جميع الحقوق محفوظة.',
+        footer_top: 'العودة للأعلى ↑'
+      },
+      en: {
+        nav_role: 'Visuals & Motion Artist',
+        nav_about: 'About',
+        nav_skills: 'Skills',
+        nav_clients: 'Clients',
+        nav_portfolio: 'Portfolio',
+        nav_contact: 'Contact',
+        nav_cta: 'Start a Project',
+        hero_status: 'Available for freelance & creative direction',
+        hero_greeting: 'Welcome, I am',
+        hero_description: 'Visual content creator, graphic designer, and motion editor. I transform complex ideas into cinematic, high-converting visual assets.',
+        hero_view_work: 'Explore Work',
+        hero_contact_me: 'Contact Me',
+        hero_canvas_hint: 'Move cursor to guide the dynamic vector pen bezier curves',
+        clients_subtitle: 'Brands & Companies I have collaborated with',
+        about_tag: 'About & Creative Philosophy',
+        about_heading: 'Where Strategy Meets Visual Impact',
+        about_subtext: 'Bridging strategic thinking and modern cinematic art direction to produce high-impact brand identities and commercial visual productions.',
+        bento_cs_title: 'Visual Documentation & Film',
+        bento_cs_desc: 'Commercial and studio product coverage with dynamic lighting, capturing vivid frames that resonate with audiences across platforms.',
+        bento_video_title: 'Motion Design & Editing',
+        bento_video_desc: 'Producing high-retention 2D/3D motion graphics and rhythmic video edits that convey complex value propositions instantly.',
+        bento_identity_title: 'Graphic Design & Packaging',
+        bento_identity_desc: 'Comprehensive brand identities, marketing collateral, and print-ready packaging engineered to highest production standards.',
+        skills_tag: 'Digital Arsenal & Expertise',
+        skills_heading: 'Tools of the Craft',
+        sk_graphic: 'Digital Ads & Identity',
+        sk_motion: '2D/3D Motion & VFX',
+        sk_photo: 'Commercial & Event Media',
+        sk_3d: 'Spatial 3D Modeling',
+        port_tag: 'Selected Works',
+        port_heading: 'Curated Multi-Discipline Gallery',
+        filter_all: 'All',
+        filter_identity: 'Visual Identity',
+        filter_social: 'Social Media',
+        filter_motion: 'Motion Graphics',
+        filter_photo: 'Photography',
+        filter_prints: 'Prints & Packaging',
+        filter_montage: 'Montage & Reels',
+        contact_tag: 'Let us build something exceptional',
+        contact_heading: 'Ready to elevate your visual identity?',
+        contact_subtext: 'Reach out directly to discuss brand collaborations, commercial reels, packaging design, or custom video production.',
+        c_direct: 'Instant Chat',
+        c_portfolio: 'Behance Portfolio',
+        c_social: 'Behind the Scenes',
+        c_email: 'Email Inquiry',
+        footer_rights: 'All rights reserved.',
+        footer_top: 'Back to Top ↑'
+      }
+    };
+
+    let currentLang = 'ar';
+    const langToggleBtn = document.getElementById('langToggle');
+    const langLabel = document.getElementById('langLabel');
+    const ctaIcon = document.getElementById('ctaIcon');
+
+    langToggleBtn.addEventListener('click', () => {
+      currentLang = currentLang === 'ar' ? 'en' : 'ar';
+      document.documentElement.lang = currentLang;
+      document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+      langLabel.textContent = currentLang === 'ar' ? 'English' : 'العربية';
+
+      if (ctaIcon) {
+        ctaIcon.setAttribute('data-lucide', currentLang === 'ar' ? 'arrow-left' : 'arrow-right');
+      }
+
+      document.querySelectorAll('[data-i18n]').forEach((el) => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[currentLang][key]) {
+          el.textContent = translations[currentLang][key];
+        }
+      });
+
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
