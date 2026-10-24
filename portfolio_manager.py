@@ -4,6 +4,7 @@ import re
 import threading
 import webbrowser
 from http.server import SimpleHTTPRequestHandler, HTTPServer
+import subprocess
 import tkinter as tk
 from tkinter import ttk, messagebox
 
@@ -67,33 +68,39 @@ def format_video_embed(url, autoplay=False):
 
     ap_param = "autoplay=1&mute=1" if autoplay else "autoplay=0"
 
+    # YouTube standard watch link
     if "youtube.com/watch" in url and "v=" in url:
         video_id = url.split("v=")[1].split("&")[0].split("?")[0]
         return f"https://www.youtube-nocookie.com/embed/{video_id}?{ap_param}&rel=0"
 
+    # YouTube embed link
     if "youtube.com/embed/" in url:
         video_id = url.split("youtube.com/embed/")[1].split("?")[0].split("&")[0]
         return f"https://www.youtube-nocookie.com/embed/{video_id}?{ap_param}&rel=0"
 
+    # YouTube short share link
     if "youtu.be/" in url:
         video_id = url.split("youtu.be/")[1].split("?")[0].split("&")[0]
         return f"https://www.youtube-nocookie.com/embed/{video_id}?{ap_param}&rel=0"
 
+    # YouTube Shorts link
     if "youtube.com/shorts/" in url:
         video_id = url.split("youtube.com/shorts/")[1].split("?")[0].split("&")[0]
         return f"https://www.youtube-nocookie.com/embed/{video_id}?{ap_param}&rel=0"
 
-    if "vimeo.com/" in url and "player.vimeo.com" not in url:
-        parts = url.replace("https://vimeo.com/", "").replace("http://vimeo.com/", "").split("?")[0].split("/")
-        video_id = parts[0]
-        hash_param = f"?h={parts[1]}" if len(parts) > 1 else "?"
-        vimeo_ap = "&autoplay=1" if autoplay else ""
-        return f"https://player.vimeo.com/video/{video_id}{hash_param}{vimeo_ap}"
+    # Vimeo link: Autoplay strictly disabled
+    if "vimeo.com/" in url:
+        clean_vimeo = re.sub(r'[?&]autoplay=[01]', '', url)
+        if "player.vimeo.com" not in clean_vimeo:
+            parts = clean_vimeo.replace("https://vimeo.com/", "").replace("http://vimeo.com/", "").split("?")[0].split("/")
+            video_id = parts[0]
+            hash_param = f"?h={parts[1]}" if len(parts) > 1 else ""
+            return f"https://player.vimeo.com/video/{video_id}{hash_param}"
+        return clean_vimeo
 
     return url
 
 def format_pdf_embed(url):
-    """Converts Drive and cloud PDF links into embed-ready iframe sources."""
     url = url.strip()
     if not url:
         return ""
@@ -136,7 +143,6 @@ def generate_card_html(project):
     if not thumb or "vimeo.com" in thumb or "youtube.com" in thumb or "youtu.be" in thumb:
         thumb = "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=800&q=80"
 
-    # Both case studies and visual identity modes render as rich project pages
     if p_type in ["case_study", "visual_identity"]:
         return f"""          <!-- Project Card: {title} -->
           <a href="projects/{p_id}.html" class="project-card glow-hover block rounded-3xl bg-brand-card overflow-hidden border border-white/10 group cursor-pointer" data-category="{category_attr}" data-project-type="{p_type}" data-cursor="hover">
@@ -167,7 +173,8 @@ def generate_card_html(project):
         play_btn = ""
         if media_type == "video":
             clean_url = re.sub(r'#(vertical|short|reel|portrait)\b', '', raw_media_url, flags=re.IGNORECASE).strip()
-            media_url = format_video_embed(clean_url, autoplay=True)
+            is_vimeo = "vimeo.com" in clean_url
+            media_url = format_video_embed(clean_url, autoplay=(not is_vimeo))
             play_btn = """              <div class="absolute inset-0 flex items-center justify-center">
                 <div class="w-14 h-14 rounded-full bg-brand-yellow/90 text-black flex items-center justify-center group-hover:scale-110 shadow-lg shadow-brand-yellow/30 transition-transform">
                   <i data-lucide="play" class="w-6 h-6 fill-current"></i>
@@ -192,7 +199,6 @@ def generate_card_html(project):
           </div>\n"""
 
 def generate_visual_identity_page(project):
-    """Generates a specialized showcase page tailored for Visual Identity, Brand Books, and Guidelines."""
     title = project.get("title", "")
     client = project.get("client", "Client Name")
     role = project.get("role", "Brand Identity & Art Direction")
@@ -205,7 +211,6 @@ def generate_visual_identity_page(project):
 
     deliv_items = "".join([f'<li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-brand-yellow"></i> {d}</li>\n' for d in deliverables])
 
-    # PDF Action Buttons in Header
     pdf_header_cta = ""
     pdf_embed_section = ""
     if pdf_url:
@@ -249,7 +254,6 @@ def generate_visual_identity_page(project):
       </div>
     </section>"""
 
-    # High-impact presentation boards stack
     gallery_html = ""
     if gallery:
         board_items = ""
@@ -344,7 +348,7 @@ def generate_visual_identity_page(project):
   <main class="max-w-5xl mx-auto px-6 pb-24 space-y-16">
     <section class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
       <div class="md:col-span-2">
-        <h2 class="text-xl font-bold text-brand-yellow mb-3">نظرة عامة على المشروع</h2>
+        <h2 class="text-xl font-bold text-brand-yellow mb-3">فلسفة ومفهوم الهوية</h2>
         <p class="text-gray-300 leading-relaxed text-sm sm:text-base font-light">{overview}</p>
       </div>
       <div class="p-6 rounded-2xl bg-brand-card/70 border border-white/5 space-y-3">
@@ -443,6 +447,13 @@ def generate_case_study_page(project):
       </div>
     </section>"""
 
+    # Direct Cloudinary MP4 without autoplay vs clean external iframe embed
+    def render_embed_tag(url):
+        is_direct_mp4 = "res.cloudinary.com" in url or url.lower().endswith((".mp4", ".webm", ".ogg"))
+        if is_direct_mp4:
+            return f'<video src="{url}" controls playsinline class="w-full h-full object-contain"></video>'
+        return f'<iframe src="{url}" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="w-full h-full"></iframe>'
+
     video_html = ""
     if raw_video_input:
         wide_videos = []
@@ -455,7 +466,12 @@ def generate_case_study_page(project):
 
             is_vertical = any(k in line.lower() for k in ["/shorts/", "#vertical", "#short", "#reel", "tiktok.com", "instagram.com/reel"])
             clean_line = re.sub(r'#(vertical|short|reel|portrait)\b', '', line, flags=re.IGNORECASE).strip()
-            embed_url = format_video_embed(clean_line, autoplay=False)
+            
+            # Format embeds if YouTube/Vimeo, otherwise leave raw for Cloudinary MP4
+            if "youtube" in clean_line or "youtu.be" in clean_line or "vimeo" in clean_line:
+                embed_url = format_video_embed(clean_line, autoplay=False)
+            else:
+                embed_url = clean_line
 
             if embed_url:
                 if is_vertical:
@@ -472,12 +488,12 @@ def generate_case_study_page(project):
                 if len(wide_videos) == 1:
                     wide_markup = f"""
         <div class="aspect-video w-full rounded-3xl overflow-hidden border border-white/10 bg-black shadow-2xl hover:border-brand-yellow/40 transition-all">
-          <iframe src="{wide_videos[0]}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="w-full h-full"></iframe>
+          {render_embed_tag(wide_videos[0])}
         </div>"""
                 else:
                     cards = "".join([f"""
         <div class="aspect-video w-full rounded-2xl overflow-hidden border border-white/10 bg-black shadow-2xl hover:border-brand-yellow/40 transition-all">
-          <iframe src="{u}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="w-full h-full"></iframe>
+          {render_embed_tag(u)}
         </div>\n""" for u in wide_videos])
                     wide_markup = f"""
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -494,7 +510,7 @@ def generate_case_study_page(project):
             if short_videos:
                 cards = "".join([f"""
         <div class="aspect-[9/16] w-full rounded-3xl overflow-hidden border border-white/10 bg-black shadow-2xl hover:border-brand-yellow/40 transition-all">
-          <iframe src="{u}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen class="w-full h-full"></iframe>
+          {render_embed_tag(u)}
         </div>\n""" for u in short_videos])
                 short_markup = f"""
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
@@ -804,23 +820,26 @@ class PortfolioApp:
             self.tree.see(p_id)
 
     def on_build(self):
-        import subprocess
-
         # 1. Regenerate local HTML files
         if not build_website():
             return
 
         # 2. Automatically sync changes to GitHub
         try:
+            # Pull remote changes first (like CNAME or domain settings) to prevent rejected pushes
+            subprocess.run(["git", "pull", "--rebase", "origin", "main"], 
+                           capture_output=True, 
+                           creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+
             # Stage modified and newly created files
             subprocess.run(["git", "add", "."], check=True, creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
             
-            # Commit changes (ignores error if nothing new was edited)
+            # Commit changes (ignores error if nothing was edited)
             subprocess.run(["git", "commit", "-m", "Portfolio update via manager"], 
                            capture_output=True, 
                            creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
             
-            # Push updates to your GitHub repository
+            # Push updates to GitHub repository
             subprocess.run(["git", "push", "origin", "main"], check=True, creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
             
             messagebox.showinfo(
@@ -939,7 +958,7 @@ class ProjectEditor(tk.Toplevel):
             chk = tk.Checkbutton(cats_frame, text=label, variable=var, font=("Arial", 9), bg="#1B1B22", fg="#FFFFFF", selectcolor="#0B0B0E", activebackground="#1B1B22", activeforeground="#F59E0B")
             chk.pack(anchor="w", padx=10, pady=3)
 
-        # Display Mode: Supports Case Study, Lightbox, and Visual Identity
+        # Display Mode
         tk.Label(scrollable_frame, text="Display Mode:", font=("Arial", 9, "bold"), fg="#F59E0B", bg="#141418").pack(anchor="w", pady=(8, 2))
         self.cb_type = ttk.Combobox(scrollable_frame, values=["case_study", "lightbox", "visual_identity"], state="readonly")
         self.cb_type.set(self.project_data.get("type", "visual_identity"))
