@@ -25,6 +25,7 @@
       "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792356073/falfol-page-1.png",
       "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792356073/falfol-page-2.png",
       "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792356073/falfol-page-3.png",
+      "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792356073/falfol-page-3-1.png",
       "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792356073/falfol-page-4.png",
       "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792356073/falfol-page-5.png",
       "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1792356073/falfol-page-6.png",
@@ -118,11 +119,14 @@
     ],
     "type": "case_study",
     "thumbnail": "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791410677/habraramadan-cover.png",
+    "lightbox_media_type": "image",
+    "lightbox_media_url": "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791410677/habraramadan-cover.png",
+    "pdf_url": "",
     "client": "Habra Fresh Meat",
     "role": "Art Direction & Visuals",
     "disciplines": "Design",
     "year": "2024",
-    "overview": "مشروع سوشيال ميديا لمتجرهبرة للحوم الطازجة في شهر رمضان المبارك. يتضمن المشروع بوستات أحادية، ستوريات، بوستات كاروسيل، بوستات ثلاثيية، بالإضافةالى تصوير ومونتاج فيديوهات.",
+    "overview": "مشروع سوشيال ميديا لمتجر هبرة للحوم الطازجة في شهر رمضان المبارك. يتضمن المشروع بوستات أحادية، ستوريات، بوستات كاروسيل، بوستات ثلاثيية، بالإضافةالى تصوير ومونتاج فيديوهات.",
     "deliverables": [
       "Visual Identity",
       "Digital Social Media",
@@ -138,9 +142,7 @@
       "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791410680/habraramadan-stories1.png",
       "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791410680/habraramadan-stories2.png"
     ],
-    "video_embed_url": "",
-    "lightbox_media_type": "image",
-    "lightbox_media_url": "https://res.cloudinary.com/di8ioqtv/image/upload/f_auto/q_auto/v1791410677/habraramadan-cover.png"
+    "video_embed_url": ""
   },
   {
     "id": "palmier-socials",
